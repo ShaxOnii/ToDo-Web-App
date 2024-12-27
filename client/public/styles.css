@@ -1,0 +1,429 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Montserrat", sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between; /* Elementy rozłożone na boki */
+  align-items: center; /* Wyśrodkowanie pionowe */
+  background-color: #f5ba13;
+  margin: auto -16px;
+  padding: 16px 32px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+  background-image: url("https://www.transparenttextures.com/patterns/diagonal-striped-brick.png");
+}
+
+header h1 {
+  display: flex;
+  align-items: center; /* Wyśrodkowanie ikony i tekstu w pionie */
+  justify-content: left; /* Wyśrodkowanie całego elementu w poziomie */
+  color: #fff;
+  font-family: "McLaren";
+  font-weight: 200;
+  padding-bottom: 10px;
+  gap: 10px; /* Odstęp między ikoną a tekstem */
+}
+
+header .big-icon {
+  padding-top: 3px;
+  padding-bottom: 0px;
+  text-align: center;
+}
+
+body {
+  background: #eee;
+  /* background-color: #ffffff;
+  background-image: url("https://www.transparenttextures.com/patterns/cubes.png"); */
+  padding: 0 16px;
+  background-color: #c2c2c2;
+  background-image: url("https://www.transparenttextures.com/patterns/dark-wood.png");
+}
+
+.main {
+  display: flex; /* Aktywacja flexbox */
+  justify-content: center; /* Wyśrodkowanie w poziomie */
+  align-items: center; /* Wyśrodkowanie w pionie */
+  min-height: 70vh; /* Wysokość widoku */
+  margin: 0; /* Usunięcie marginesów */
+}
+
+footer {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  width: 97%;
+  height: 2.5rem;
+}
+
+footer p {
+  color: #ccc;
+}
+
+.note {
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 2px 5px #ccc;
+  padding: 10px;
+  width: 240px;
+  margin: 16px;
+  float: left;
+}
+
+.note h1 {
+  font-size: 1.1em;
+  margin-bottom: 6px;
+}
+.note p {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.note button {
+  position: relative;
+  float: right;
+  margin-right: 4px;
+  font-size: 0.9em;
+  color: white;
+  background-color: #4fc717;
+  border: none;
+  width: 40px;
+  height: 36px;
+  border-radius: 5px;
+  padding: 3px 0px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.note button.delete {
+  background-color: #ca2020; /* Szary przycisk */
+  color: rgb(247, 247, 247);
+}
+
+ul {
+  list-style-type: none;
+}
+
+form.create-note {
+  position: relative;
+  width: 480px;
+  margin: 30px auto 20px auto;
+  background: #fff;
+  padding: 15px;
+  border-radius: 7px;
+  box-shadow: 0 1px 5px rgb(138, 137, 137);
+}
+
+textarea.auto-resize {
+  width: 100%; /* Szerokość textarea */
+  min-height: 50px; /* Minimalna wysokość */
+  max-height: 200px; /* Maksymalna wysokość */
+  overflow: hidden; /* Ukryj pasek przewijania */
+  resize: none; /* Wyłącz ręczne zmienianie rozmiaru */
+  padding: 10px;
+  box-sizing: border-box; /* Wliczaj padding w szerokość */
+  font-size: 1.1em; /* Dopasuj rozmiar tekstu */
+  line-height: 1.5; /* Wysokość linii */
+}
+
+form.create-note input,
+form.create-note textarea {
+  width: 100%;
+  border: none;
+  padding: 4px;
+  outline: none;
+  font-size: 1.2em;
+  font-family: inherit;
+  resize: none;
+}
+
+form.create-note button {
+  position: absolute;
+  right: 18px;
+  bottom: -18px;
+  background: #f5ba13;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  outline: none;
+}
+
+/* Dropdown stylizacja */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.dropdown-button:hover {
+  color: #ccc;
+}
+
+/* Styl menu rozwijanego */
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.dropdown-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f5ba13;
+  color: white;
+}
+
+/* Kontener edycji */
+.note-edit {
+  background-color: #fff; /* Białe tło */
+  border: 2px solid #f5ba13; /* Akcent kolorystyczny */
+  border-radius: 8px; /* Zaokrąglenie */
+  padding: 12px; /* Odstęp wewnętrzny */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+  width: 270px; /* Dopasuj szerokość */
+  height: 300px;
+  margin: 16px auto; /* Wyśrodkowanie */
+  display: flex;
+  min-height: 50px; /* Minimalna wysokość */
+  max-height: 400px; /* Maksymalna wysokość */
+  overflow: hidden; /* Ukryj pasek przewijania */
+  flex-direction: column;
+  gap: 10px; /* Odstęp między elementami */
+}
+
+/* Pola edycji */
+.note-edit input,
+.note-edit textarea {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 1em;
+  font-family: "Montserrat", sans-serif;
+  box-sizing: border-box; /* Padding wliczony w szerokość */
+  resize: none; /* Wyłącz zmienianie rozmiaru */
+  overflow: hidden; /* Ukryj pasek przewijania */
+  outline: none; /* Usunięcie obramowania podczas focus */
+  transition: border 0.2s ease; /* Płynne przejście */
+}
+
+.note-edit textarea {
+  height: 100%;
+}
+
+.note-edit input:focus,
+.note-edit textarea:focus {
+  border-color: #f5ba13; /* Zmieniony kolor podczas focus */
+  box-shadow: 0 0 5px rgba(245, 186, 19, 0.5); /* Akcent przy focus */
+}
+
+/* Przyciski */
+.note-edit button {
+  font-size: 0.9em;
+  color: white;
+  background-color: #f5ba13;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.note-edit button:hover {
+  background-color: #ffa500; /* Jaśniejszy odcień podczas hover */
+}
+
+.note-edit button.cancel {
+  background-color: #ddd; /* Szary przycisk */
+  color: black;
+}
+
+.note-edit button.cancel:hover {
+  background-color: #bbb; /* Ciemniejszy szary przy hover */
+}
+
+/* Login Screen */
+
+.login-screen {
+  display: flex;
+  align-items: center; /* Wyśrodkowanie ikony i tekstu w pionie */
+  justify-content: center;
+  border: 1px solid black;
+  width: 400px;
+  height: 500px;
+  height: auto;
+  color: white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.75);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.login-form {
+  padding: 40px;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: brightness(40%);
+  flex-direction: column;
+  display: flex;
+  gap: 5px;
+}
+
+.login-form h1 {
+  font-weight: normal;
+  font-size: 24px;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+  margin-bottom: 40px;
+}
+
+.login-form label {
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  font-size: 15px;
+  letter-spacing: 2px;
+  padding-left: 10px;
+}
+
+.login-form input {
+  background: rgba(255, 255, 255, 0.3);
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  padding: 0px 20px;
+  border: none;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.login-form button {
+  background: #f5ba13;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 40px;
+  border: none;
+  margin: 10px 0px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Register Screen */
+
+.register-screen {
+  display: flex;
+  align-items: center; /* Wyśrodkowanie ikony i tekstu w pionie */
+  justify-content: center;
+  border: 1px solid black;
+  width: 400px;
+  height: 500px;
+  height: auto;
+  color: white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.75);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.register-form {
+  padding: 40px;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: brightness(140%);
+  flex-direction: column;
+  display: flex;
+  gap: 5px;
+}
+
+.register-form h1 {
+  font-weight: normal;
+  font-size: 24px;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+  margin-bottom: 40px;
+}
+
+.register-form label {
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  font-size: 15px;
+  letter-spacing: 2px;
+  padding-left: 10px;
+}
+
+.register-form input {
+  background: rgba(255, 255, 255, 0.3);
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  padding: 0px 20px;
+  border: none;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.register-form button {
+  background: #f5ba13;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 40px;
+  border: none;
+  margin: 10px 0px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+.confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.confirmation-box button {
+  margin: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
