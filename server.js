@@ -15,6 +15,10 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.get("/", (res, req) => {
+  res.send("Welcome");
+});
+
 // Static files
 app.use(express.static("public"));
 
@@ -133,12 +137,11 @@ app.delete("/todos/delete/:id", ensureAuthenticated, async (req, res) => {
 app.delete("/user/delete/:id", ensureAuthenticated, async (req, res) => {
   const userId = req.params.id;
   try {
-
     // Usuń notatki użytkownika
     await db.query("DELETE FROM todos WHERE user_id = $1", [userId]);
     // Usuń użytkownika
     await db.query("DELETE FROM users WHERE id = $1", [userId]);
-    
+
     res
       .status(200)
       .json({ message: "Użytkownik i jego notatki zostały usunięte." });
