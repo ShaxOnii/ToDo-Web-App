@@ -1,5 +1,5 @@
 const express = require("express");
-const pg = require("pg");
+const { pg, Pool } = require("pg");
 const env = require("dotenv");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
@@ -22,18 +22,40 @@ app.get("/", (req, res) => {
 // Static files
 app.use(express.static("public"));
 
-// Database connection
-const db = new pg.Client({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DATABASE,
-  password: process.env.PG_PASSWORD,
-  port: process.env.PG_PORT,
+// // Database connection
+// const db = new pg.Client({
+//   user: process.env.PG_USER,
+//   host: process.env.PG_HOST,
+//   database: process.env.PG_DATABASE,
+//   password: process.env.PG_PASSWORD,
+//   port: process.env.PG_PORT,
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: {
+//     rejectUnauthorized: false, // Dodaj to, aby zaakceptować certyfikaty Heroku
+//   },
+// });
+
+// db.connect()
+//   .then(() => console.log("Połączono z bazą danych PostgreSQL"))
+//   .catch((err) => console.error("Błąd połączenia z bazą danych", err.stack));
+
+// Pool connection
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // Dodaj to, aby zaakceptować certyfikaty Heroku
+  },
 });
 
+// Test połączenia
 db.connect()
-  .then(() => console.log("Połączono z bazą danych PostgreSQL"))
-  .catch((err) => console.error("Błąd połączenia z bazą danych", err.stack));
+  .then((client) => {
+    console.log("Połączono z bazą danych");
+    client.release(); // Zwalnia połączenie z puli
+  })
+  .catch((err) => console.error("Błąd połączenia z bazą danych:", err));
+
+module.exports = db;
 
 // Middleware: Autenticate JWT token
 const ensureAuthenticated = (req, res, next) => {
