@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.send("Welcome");
+  res.send("Welcome", process.env.TEST);
 });
 
 // Static files
