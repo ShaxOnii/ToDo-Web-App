@@ -15,8 +15,8 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-  res.send("Welcome", process.env.TEST);
+app.get("/", async (req, res) => {
+  await res.send("Welcome", process.env.TE);
 });
 
 // Static files
