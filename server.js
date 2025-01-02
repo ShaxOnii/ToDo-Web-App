@@ -16,21 +16,20 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-  res.send(`Welcome ${process.env.TEST}`);
-});
-
 // Static files
 app.use(express.static("public"));
 
 const corsOptions = {
-  origin: ["https://shax-todo.com/"], // Zastąp swoją domeną Netlify
+  origin:
+    process.env.NODE_ENV === "production"
+      ? "https://shax-todo.com"
+      : "http://localhost:3000",
+  allowedHeaders: ["Content-Type", "Authorization"],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
-
-app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
+app.use(cors(corsOptions));
 
 // // Database connection
 // const db = new pg.Client({
@@ -55,6 +54,7 @@ const db = new Pool({
   ssl: {
     rejectUnauthorized: false, // Dodaj to, aby zaakceptować certyfikaty Heroku
   },
+  max: 10,
 });
 
 // Test połączenia
@@ -80,6 +80,11 @@ const ensureAuthenticated = (req, res, next) => {
     next();
   });
 };
+
+//test
+app.get("/", (req, res) => {
+  res.send(`Welcome ${process.env.TEST}`);
+});
 
 // Endpointy Todos
 app.get("/todos/get", ensureAuthenticated, async (req, res) => {
