@@ -24,12 +24,13 @@ app.get("/", (req, res) => {
 app.use(express.static("public"));
 
 const corsOptions = {
-  origin: ["https://shax-todo.com/"], // Zastąp swoją domeną Netlify
+  origin: "https://shax-todo.com", // Zastąp swoją domeną Netlify
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // // Database connection
 // const db = new pg.Client({
