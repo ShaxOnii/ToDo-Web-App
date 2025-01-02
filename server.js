@@ -4,6 +4,7 @@ const env = require("dotenv");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
 env.config();
 
@@ -21,6 +22,14 @@ app.get("/", (req, res) => {
 
 // Static files
 app.use(express.static("public"));
+
+const corsOptions = {
+  origin: ["https://shax-todo.com"], // Zastąp swoją domeną Netlify
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 // // Database connection
 // const db = new pg.Client({
@@ -54,8 +63,6 @@ db.connect()
     client.release(); // Zwalnia połączenie z puli
   })
   .catch((err) => console.error("Błąd połączenia z bazą danych:", err));
-
-module.exports = db;
 
 // Middleware: Autenticate JWT token
 const ensureAuthenticated = (req, res, next) => {
