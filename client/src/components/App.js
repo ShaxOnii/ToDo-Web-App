@@ -6,6 +6,8 @@ import RegistrationScreen from "./auth/RegistrationScreen";
 import api from "../services/axios";
 import Header from "./ui/Header";
 import Footer from "./ui/Footer";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 import ConfirmationDialog from "./ui/ConfirmationDialog";
 import { jwtDecode } from "jwt-decode";
 
@@ -18,6 +20,7 @@ function App() {
   const [deleteUserId, setDeleteUserId] = useState(null);
   const [deleteToDoId, setDeleteToDoId] = useState(null);
   const [userId, setUserId] = useState();
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -49,18 +52,29 @@ function App() {
   const handleRegistration = async (username, password) => {
     try {
       const response = await api.post("/register", { username, password });
-      console.log(response.request.status);
 
       if (response.request.status === 201) {
-        alert("Registration completed successfully. You can log in now.");
+        setAlert({
+          type: "success",
+          message: "Registration completed successfully. You can log in now.",
+        });
         setIsRegistering(false);
-      } else {
-        const error = await response.json();
-        alert(`Registration Error: ${error.error || "Unknow problem."}`);
+        // Ustaw timer do automatycznego ukrycia alertu po 10 sekundach
+        setTimeout(() => setAlert(null), 10000);
       }
     } catch (error) {
-      console.error("Registration Error: ", error);
-      alert("Couldn`t register your account. Try new Login or later.");
+      if (error.response && error.response.status === 409) {
+        setAlert({
+          type: "error",
+          message: "User with this username already exists.",
+        });
+      } else {
+        setAlert({
+          type: "error",
+          message: "Registration failed. Please try again later.",
+        });
+      }
+      setTimeout(() => setAlert(null), 10000);
     }
   };
 
@@ -204,6 +218,17 @@ function App() {
           // Registration Screen
           <>
             <Header />
+            {alert && (
+              <Stack sx={{ width: "100%", marginTop: 2 }} spacing={2}>
+                <Alert
+                  variant="filled"
+                  severity={alert.type}
+                  onClose={() => setAlert(null)}
+                >
+                  {alert.message}
+                </Alert>
+              </Stack>
+            )}
             <div className="main">
               <RegistrationScreen
                 onRegister={handleRegistration}
@@ -216,6 +241,17 @@ function App() {
           // Login Screen
           <>
             <Header />
+            {alert && (
+              <Stack sx={{ width: "100%", marginTop: 2 }} spacing={2}>
+                <Alert
+                  variant="filled"
+                  severity={alert.type}
+                  onClose={() => setAlert(null)}
+                >
+                  {alert.message}
+                </Alert>
+              </Stack>
+            )}
             <div className="main">
               <LoginScreen
                 onLogin={handleLogin}

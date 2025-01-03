@@ -12,7 +12,7 @@ function RegistrationScreen({ onRegister, onSwitchToLogin }) {
     try {
       await onRegister(username, password);
     } catch (error) {
-      alert("Registration failed");
+      console.error("Registration failed:", error);
     } finally {
       setIsSubmitting(false); // Przywrócenie możliwości klikania po zakończeniu
     }

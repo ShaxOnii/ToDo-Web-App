@@ -81,11 +81,6 @@ const ensureAuthenticated = (req, res, next) => {
   });
 };
 
-//test
-app.get("/", (req, res) => {
-  res.send(`Welcome ${process.env.TEST}`);
-});
-
 // Endpointy Todos
 app.get("/todos/get", ensureAuthenticated, async (req, res) => {
   try {
@@ -206,7 +201,7 @@ app.post("/register", async (req, res) => {
         .status(409)
         .json({ error: "Użytkownik o podanej nazwie już istnieje" });
     }
-    
+
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const result = await db.query(
       "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id, username",

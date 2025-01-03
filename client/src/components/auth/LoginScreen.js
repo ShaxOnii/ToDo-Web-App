@@ -3,10 +3,21 @@ import React, { useState } from "react";
 function LoginScreen({ onLogin, onSwitchToLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onLogin(username, password);
+
+    if (isSubmitting) return; // Uniemożliwia ponowne wysłanie formularza
+    setIsSubmitting(true);
+    try {
+      await onLogin(username, password);
+    } catch (error) {
+      alert("Wrong Login or Password");
+      
+    } finally {
+      setIsSubmitting(false); // Przywrócenie możliwości klikania po zakończeniu
+    }
   };
 
   return (
@@ -30,7 +41,9 @@ function LoginScreen({ onLogin, onSwitchToLogin }) {
           required
         />
 
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Logging..." : "Login"}
+        </button>
         <button type="button" onClick={onSwitchToLogin}>
           Go and register your self now !
         </button>
