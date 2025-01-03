@@ -1,5 +1,8 @@
 # First-Project: ToDo Web App
 
+Jeśli chcesz sprawdzić moją appke kliknij w link poniżej! 😀
+https://shax-todo.com/
+
 Aplikacja ToDo Web App to pełnostackowa aplikacja zaprojektowana do efektywnego zarządzania listą zadań, z uwierzytelnianiem użytkownika realizowanym za pomocą tokenów JSON Web Tokens (JWT). Aplikacja została stworzona z wykorzystaniem nowoczesnych technologii, aby zapewnić płynne działanie i bezpieczną funkcjonalność. Oto przegląd zastosowanych technologii:
 
 ## **Frontend**:

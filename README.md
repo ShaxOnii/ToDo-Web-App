@@ -3,6 +3,9 @@
 This project documentation is also available in Polish.  
 You can find it in the file: [README_PL.md](README_PL.md).
 
+If you want to check it out, go ahead and click the link below! 😀
+https://shax-todo.com/
+
 The ToDo Web App is a full-stack application designed to manage a to-do list efficiently, with user authentication implemented using JSON Web Tokens (JWT). The application is built with modern technologies to ensure a smooth user experience and secure functionality. Here's an overview of the technologies used:
 
 ## **Frontend**:
