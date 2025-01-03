@@ -195,6 +195,18 @@ app.post("/register", async (req, res) => {
     return res.status(400).json({ error: "Brak wymaganych pól" });
   }
   try {
+    // Sprawdź, czy użytkownik już istnieje
+    const existingUser = await db.query(
+      "SELECT * FROM users WHERE username = $1",
+      [username]
+    );
+
+    if (existingUser.rowCount > 0) {
+      return res
+        .status(409)
+        .json({ error: "Użytkownik o podanej nazwie już istnieje" });
+    }
+    
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const result = await db.query(
       "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id, username",
