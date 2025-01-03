@@ -3,13 +3,18 @@ import React, { useState } from "react";
 function RegistrationScreen({ onRegister, onSwitchToLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username && password) {
-      onRegister(username, password);
-    } else {
-      alert("Full all fields.");
+    if (isSubmitting) return; // Uniemożliwia ponowne wysłanie formularza
+    setIsSubmitting(true);
+    try {
+      await onRegister(username, password);
+    } catch (error) {
+      alert("Registration failed");
+    } finally {
+      setIsSubmitting(false); // Przywrócenie możliwości klikania po zakończeniu
     }
   };
 
@@ -33,7 +38,9 @@ function RegistrationScreen({ onRegister, onSwitchToLogin }) {
           required
         />
 
-        <button type="submit">Submit registration</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Registering..." : "Register"}
+        </button>
         <button type="button" onClick={onSwitchToLogin}>
           Go back to Login
         </button>
